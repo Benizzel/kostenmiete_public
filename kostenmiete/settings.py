@@ -131,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'de-ch'
 
-TIME_ZONE = 'UTC+2'
+TIME_ZONE = 'Europe/Zurich'
 
 USE_I18N = True
 
