@@ -34,13 +34,13 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # Get it from env variable as String. If not defined -> "False".
 # Compare retrieved String against "True". The result is the DEBUG Boolean
 # only True, when env Variable == "True"
-DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
+DEBUG: bool = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 # Hosts defined in env variable and localhost are allowed
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 # Helper directive. Needed for example to determine the right database connection.
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+DEVELOPMENT_MODE: bool = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 
 # Application definition
@@ -90,12 +90,13 @@ WSGI_APPLICATION = 'kostenmiete.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 if DEVELOPMENT_MODE is True:
     # Get database sqlite3 from Django Project
-    Databases = {
+    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+
 # When collecting static files, do not connect to database
 elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     # Exception, if no database env variable is set
