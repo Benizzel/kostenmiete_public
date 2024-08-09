@@ -2,26 +2,26 @@
 
 {% block content %}
     <h2>🏠 Siedlung {{ siedlung.internal_id }} </h2>
-    <p>Interne ID: {{ siedlung.internal_id }}</p>
-    <p>Bezeichnung: {{ siedlung.bezeichnung }}</p>
-    <p>Anlagewert: {{ siedlung.anlagewert }}</p>
-    <p>GVZ-Wert: {{ siedlung.versicherungswert }}</p>
-    <p>Baurechtszins: {{ siedlung.baurechtszins }}</p>
-    <p>Betriebsquote Zuschlag: {{ siedlung.betriebsquote_zuschlag }}</p>
-    <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_home' %}">Zurück</a>
-    <a class="btn btn-danger btn-sm" href="{% url 'siedlung_delete' siedlung.pk %}">Löschen</a>
-    <a class="btn btn-success btn-sm" href="{% url 'siedlung_update' siedlung.pk %}">Update</a>
-    <p>---</p>
-    <a class="btn btn-success btn-sm" href="{% url 'objekt_create' siedlung.pk %}">+ Neues Objekt hinzufügen</a>
+        <p>Interne ID: {{ siedlung.internal_id }}</p>
+        <p>Bezeichnung: {{ siedlung.bezeichnung }}</p>
+        <p>Anlagewert: {{ siedlung.anlagewert }}</p>
+        <p>GVZ-Wert: {{ siedlung.versicherungswert }}</p>
+        <p>Baurechtszins: {{ siedlung.baurechtszins }}</p>
+        <p>Betriebsquote Zuschlag: {{ siedlung.betriebsquote_zuschlag }}</p>
+        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_home' %}">Zurück</a>
+        <a class="btn btn-danger btn-sm" href="{% url 'siedlung_delete' siedlung.pk %}">Löschen</a>
+        <a class="btn btn-success btn-sm" href="{% url 'siedlung_update' siedlung.pk %}">Update</a>
+        <hr>
     <h2>Objekte in dieser Siedlung:</h2>
-    {% if objekte %}
-        <ul>
-        {% for objekt in objekte %}
-            <li>{{ objekt.internal_oid }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>Keine Objekte in dieser Siedlung.</p>
-    {% endif %}
+        <a class="btn btn-success btn-sm" href="{% url 'objekt_create' siedlung.pk %}">+ Neues Objekt hinzufügen</a>
 
+        {% if objekte %}
+            <ul>
+            {% for objekt in objekte %}
+                <li>{{ objekt.internal_oid }} {{ objekt.bezeichnung }} </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Keine Objekte in dieser Siedlung.</p>
+        {% endif %}
 {% endblock content %}
