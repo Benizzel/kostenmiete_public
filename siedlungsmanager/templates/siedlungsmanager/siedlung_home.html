@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Alle Siedlungen</h2>
 <ul>
-    {% if siedlung_list%}
+    {% if siedlung_list %}
         {% for siedlung in siedlung_list %}
         <li><a href="{% url 'siedlung_detail' siedlung.pk %}">{{ siedlung.internal_id }} {{ siedlung.bezeichnung }}</a></li>
         {% endfor %}
@@ -12,4 +12,15 @@
     {% endif %}
 </ul>
 <a class="btn btn-success btn-sm" href="{% url 'siedlung_create' %}">+ Neue Siedlung hinzufügen</a>
+    <hr>
+<h2>Alle Objekte </h2>
+<ul>
+    {% if objekte %}
+        {% for objekt in objekte %}
+        <li><a>Objekt: {{ objekt.internal_oid }} zu Siedlung: {{ objekt.siedlung.internal_id }}</a></li>
+        {% endfor %}
+    {% else %}
+        <p>🤨 Noch keine Objekte vorhanden. Diese können über die Siedlung erstellt werden</p>
+    {% endif %}
+</ul>
 {% endblock content %}

@@ -11,4 +11,17 @@
     <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_home' %}">Zurück</a>
     <a class="btn btn-danger btn-sm" href="{% url 'siedlung_delete' siedlung.pk %}">Löschen</a>
     <a class="btn btn-success btn-sm" href="{% url 'siedlung_update' siedlung.pk %}">Update</a>
+    <p>---</p>
+    <a class="btn btn-success btn-sm" href="{% url 'objekt_create' siedlung.pk %}">+ Neues Objekt hinzufügen</a>
+    <h2>Objekte in dieser Siedlung:</h2>
+    {% if objekte %}
+        <ul>
+        {% for objekt in objekte %}
+            <li>{{ objekt.internal_oid }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Keine Objekte in dieser Siedlung.</p>
+    {% endif %}
+
 {% endblock content %}

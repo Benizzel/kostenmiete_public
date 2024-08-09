@@ -3,10 +3,26 @@ from django.db import models
 from django.urls import reverse
 
 
+class Objekt(models.Model):
+    internal_oid = models.CharField(
+        verbose_name='OID',
+        unique=True,
+        max_length=10,
+        help_text="Maximal 10 Zeichen"
+    )
+    siedlung = models.ForeignKey(
+        'Siedlung',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        ordering = ['internal_oid']
+
+
 class Siedlung(models.Model):
     internal_id = models.CharField(
-        unique=True,
         verbose_name='Interne ID',
+        unique=True,
         max_length=5,
         help_text='Maximal 5 Zeichen'
     )
@@ -49,4 +65,3 @@ class Siedlung(models.Model):
 
     def get_absolute_url(self):
         return reverse('siedlung_detail', args=[str(self.id)])
-

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Neues Objekt hinzufügen</h2>
+    <h3>Für Siedlung {{ siedlung.internal_id }}</h3>
+<form action="" method="post">
+<!--
+csrf_token is against cross-site-request-forgery
+https://de.wikipedia.org/wiki/Cross-Site-Request-Forgery
+-->
+    {% csrf_token %}
+<!-- with form.as_p, django creates input fields within a <p> tag -->
+    {{ form.as_p }}
+    <a class="btn btn-danger btn-sm" href="{% url 'siedlung_detail' pk=siedlung.pk %}">Abbrechen</a>
+    <button type="reset" class="btn btn-secondary btn-sm">Zurücksetzen</button>
+    <button type="submit" class="btn btn-success btn-sm">Speichern</button>
+</form>
+{% endblock content %}
