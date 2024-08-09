@@ -44,5 +44,5 @@ class Siedlung(models.Model):
         return f"{self.internal_id} {self.bezeichnung}"
 
     def get_absolute_url(self):
-        return reverse('siedlung_detail', self.internal_id, args=[str(self.id)])
+        return reverse('siedlung_detail', args=[str(self.id)])
 

@@ -9,6 +9,6 @@
     <p>Baurechtszins: {{ siedlung.baurechtszins }}</p>
     <p>Betriebsquote Zuschlag: {{ siedlung.betriebsquote_zuschlag }}</p>
     <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_home' %}">Zurück</a>
-    <a class="btn btn-danger btn-sm" href="#">Löschen</a>
-    <a class="btn btn-success btn-sm" href="#">Update</a>
+    <a class="btn btn-danger btn-sm" href="{% url 'siedlung_delete' siedlung.pk %}">Löschen</a>
+    <a class="btn btn-success btn-sm" href="{% url 'siedlung_update' siedlung.pk %}">Update</a>
 {% endblock content %}

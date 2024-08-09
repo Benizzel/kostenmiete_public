@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import Siedlung
 
 
@@ -20,3 +20,15 @@ class SiedlungCreate(CreateView):
 class SiedlungDetail(DetailView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_detail.html'
+
+
+class SiedlungUpdate(UpdateView):
+    model = Siedlung
+    template_name = 'siedlungsmanager/siedlung_update.html'
+    fields = '__all__'
+
+class SiedlungDelete(DeleteView):
+    model = Siedlung
+    template_name = 'siedlungsmanager/siedlung_delete.html'
+    success_url = reverse_lazy('siedlung_home')
+

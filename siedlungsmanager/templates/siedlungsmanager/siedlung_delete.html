@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Siedlung {{ siedlung.internal_id }} löschen</h2>
+<form action="" method="post">{% csrf_token %}
+    <p>Bist du sicher das du die Siedlung löschen möchtest?</p>
+    <p><strong>{{ siedlung.internal_id }} {{ siedlung.bezeichnung }}</strong></p>
+    <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung.pk %}">Zurück</a>
+    <button type="submit btn-sm" class="btn btn-danger btn-sm">Löschen</button>
+</form>
+{% endblock content %}
