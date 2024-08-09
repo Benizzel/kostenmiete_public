@@ -87,3 +87,21 @@ class ObjektCreate(CreateView):
         siedlung_pk = self.kwargs.get('pk')
         context['siedlung'] = get_object_or_404(Siedlung, pk=siedlung_pk)
         return context
+
+
+class ObjektDetail(DetailView):
+    model = Objekt
+    template_name = 'siedlungsmanager/objekt_detail.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        Overrides the default get_context_data
+        This method is used to add extra context data to the template.
+        It retrieves the Siedlung object using the primary key from the URL.
+        It adds this Siedlung object to the context, making it available in the template.
+        """
+        context = super().get_context_data(**kwargs)
+        siedlung_pk = self.kwargs.get('pk')
+        context['siedlung'] = get_object_or_404(Siedlung, pk=siedlung_pk)
+        return context
+

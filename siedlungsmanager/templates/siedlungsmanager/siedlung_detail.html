@@ -18,7 +18,7 @@
         {% if objekte %}
             <ul>
             {% for objekt in objekte %}
-                <li>{{ objekt.internal_oid }} {{ objekt.bezeichnung }} </li>
+                <li><a href="{% url 'objekt_detail' objekt.pk %}">{{ objekt.internal_oid }} {{ objekt.bezeichnung }}</a></li>
             {% endfor %}
             </ul>
         {% else %}
