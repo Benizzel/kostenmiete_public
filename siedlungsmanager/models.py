@@ -41,6 +41,9 @@ class Siedlung(models.Model):
         help_text='Erfasse einen Wert zwischen 0 und 100 mit maximal zwei Nachkommastellen'
     )
 
+    class Meta:
+        ordering = ['internal_id']
+
     def __str__(self):
         return f"{self.internal_id} {self.bezeichnung}"
 
