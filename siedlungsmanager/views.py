@@ -27,6 +27,7 @@ class SiedlungUpdate(UpdateView):
     template_name = 'siedlungsmanager/siedlung_update.html'
     fields = '__all__'
 
+
 class SiedlungDelete(DeleteView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_delete.html'
