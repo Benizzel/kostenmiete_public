@@ -5,6 +5,7 @@ from django.urls import reverse
 
 class Siedlung(models.Model):
     internal_id = models.CharField(
+        unique=True,
         verbose_name='Interne ID',
         max_length=5,
         help_text='Maximal 5 Zeichen'
