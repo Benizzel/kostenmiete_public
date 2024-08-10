@@ -8,19 +8,35 @@
         <p>GVZ-Wert: {{ siedlung.versicherungswert }}</p>
         <p>Baurechtszins: {{ siedlung.baurechtszins }}</p>
         <p>Betriebsquote Zuschlag: {{ siedlung.betriebsquote_zuschlag }}</p>
+
         <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_home' %}">Zurück</a>
         <a class="btn btn-danger btn-sm" href="{% url 'siedlung_delete' siedlung.pk %}">Löschen</a>
         <a class="btn btn-success btn-sm" href="{% url 'siedlung_update' siedlung.pk %}">Update</a>
         <hr>
-    <h2>Objekte in dieser Siedlung:</h2>
         <a class="btn btn-success btn-sm" href="{% url 'objekt_create' siedlung.pk %}">+ Neues Objekt hinzufügen</a>
+        <p>
 
-        {% if objekte %}
-            <ul>
+
+        {%  if objekte %}
+        <table border="1" cellpadding="5" cellspacing="0" width="50%" align="center">
+            <caption>Objekte in dieser Siedlung</caption>
+            <thead>
+                <tr>
+                    <th>Interne OID</th>
+                    <th>Bezeichnung</th>
+                    <th>Siedlung</th>
+                </tr>
+            </thead>
+            <tbody>
             {% for objekt in objekte %}
-                <li><a href="{% url 'objekt_detail' objekt.pk %}">{{ objekt.internal_oid }} {{ objekt.bezeichnung }}</a></li>
+                <tr>
+                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.internal_oid }}</a></td>
+                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.bezeichnung }}</a></td>
+                    <td>{{ objekt.siedlung.internal_id }}</td>
+                </tr>
             {% endfor %}
-            </ul>
+            </tbody>
+        </table>
         {% else %}
             <p>Keine Objekte in dieser Siedlung.</p>
         {% endif %}

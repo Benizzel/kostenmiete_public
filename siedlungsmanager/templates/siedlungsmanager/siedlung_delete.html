@@ -3,9 +3,33 @@
 {% block content %}
 <h2>Siedlung {{ siedlung.internal_id }} löschen</h2>
 <form action="" method="post">{% csrf_token %}
-    <p>Bist du sicher das du die Siedlung löschen möchtest?</p>
+    <p>Bist du sicher das du die Siedlung und alle dazugehörigen Objekte löschen möchtest?</p>
     <p><strong>{{ siedlung.internal_id }} {{ siedlung.bezeichnung }}</strong></p>
     <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung.pk %}">Zurück</a>
     <button type="submit btn-sm" class="btn btn-danger btn-sm">Löschen</button>
+
+    {% if objekte %}
+        <h2>Objekte in dieser Siedlung, die auch gelöscht werden:</h2>
+        <table border="1" cellpadding="5" cellspacing="0" width="50%" align="center">
+            <thead>
+                <tr>
+                    <th>Interne OID</th>
+                    <th>Bezeichnung</th>
+                    <th>Siedlung</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for objekt in objekte %}
+                <tr>
+                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.internal_oid }}</a></td>
+                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.bezeichnung }}</a></td>
+                    <td>{{ objekt.siedlung.internal_id }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Keine Objekte in dieser Siedlung.</p>
+    {% endif %}
 </form>
 {% endblock content %}

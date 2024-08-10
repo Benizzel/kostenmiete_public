@@ -28,6 +28,16 @@ class SiedlungDetail(DetailView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_detail.html'
 
+    def get_object(self, **kwargs):
+        """
+        Overrides the default get_object method.
+        Returns the object the view is displaying.
+        """
+        # Extract the parameters from the URL
+        siedlung_pk = self.kwargs.get('siedlung_pk')
+        # Fetch the object using the parameters
+        return get_object_or_404(Siedlung, pk=siedlung_pk)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Get all Objekte associated with this Siedlung
@@ -40,11 +50,37 @@ class SiedlungUpdate(UpdateView):
     template_name = 'siedlungsmanager/siedlung_update.html'
     fields = '__all__'
 
+    def get_object(self, **kwargs):
+        """
+        Overrides the default get_object method.
+        Returns the object the view is displaying.
+        """
+        # Extract the parameters from the URL
+        siedlung_pk = self.kwargs.get('siedlung_pk')
+        # Fetch the object using the parameters
+        return get_object_or_404(Siedlung, pk=siedlung_pk)
+
 
 class SiedlungDelete(DeleteView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_delete.html'
     success_url = reverse_lazy('siedlung_home')
+
+    def get_object(self, **kwargs):
+        """
+        Overrides the default get_object method.
+        Returns the object the view is displaying.
+        """
+        # Extract the parameters from the URL
+        siedlung_pk = self.kwargs.get('siedlung_pk')
+        # Fetch the object using the parameters
+        return get_object_or_404(Siedlung, pk=siedlung_pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get all Objekte associated with this Siedlung
+        context['objekte'] = self.object.objekt_set.all()
+        return context
 
 
 class ObjektCreate(CreateView):
@@ -60,7 +96,7 @@ class ObjektCreate(CreateView):
         This method is called when a valid form is submitted.
         """
         # It retrieves the Siedlung primary key from the URL.
-        siedlung_pk = self.kwargs.get('pk')
+        siedlung_pk = self.kwargs.get('siedlung_pk')
         # It gets the Siedlung object or returns a 404 error if not found.
         siedlung = get_object_or_404(Siedlung, pk=siedlung_pk)
         # It sets the siedlung attribute of the new Objekt instance.
@@ -74,7 +110,7 @@ class ObjektCreate(CreateView):
         This method determines where to redirect after successful form submission.
         It returns a URL to the detail view of the Siedlung associated with the newly created Objekt.
         """
-        return reverse_lazy('siedlung_detail', kwargs={'pk': self.object.siedlung.pk})
+        return reverse_lazy('siedlung_detail', kwargs={'siedlung_pk': self.object.siedlung.pk})
 
     def get_context_data(self, **kwargs):
         """
@@ -84,7 +120,7 @@ class ObjektCreate(CreateView):
         It adds this Siedlung object to the context, making it available in the template.
         """
         context = super().get_context_data(**kwargs)
-        siedlung_pk = self.kwargs.get('pk')
+        siedlung_pk = self.kwargs.get('siedlung_pk')
         context['siedlung'] = get_object_or_404(Siedlung, pk=siedlung_pk)
         return context
 
@@ -93,6 +129,17 @@ class ObjektDetail(DetailView):
     model = Objekt
     template_name = 'siedlungsmanager/objekt_detail.html'
 
+    def get_object(self, **kwargs):
+        """
+        Overrides the default get_object method.
+        Returns the object the view is displaying.
+        """
+        # Extract the parameters from the URL
+        objekt_pk = self.kwargs.get('objekt_pk')
+
+        # Fetch the object using the parameters
+        return get_object_or_404(Objekt, pk=objekt_pk)
+
     def get_context_data(self, **kwargs):
         """
         Overrides the default get_context_data
@@ -101,7 +148,9 @@ class ObjektDetail(DetailView):
         It adds this Siedlung object to the context, making it available in the template.
         """
         context = super().get_context_data(**kwargs)
-        siedlung_pk = self.kwargs.get('pk')
+        siedlung_pk = self.kwargs.get('siedlung_pk')
         context['siedlung'] = get_object_or_404(Siedlung, pk=siedlung_pk)
         return context
+
+
 

@@ -7,16 +7,19 @@ from .views import SiedlungDelete
 from .views import ObjektDetail
 
 urlpatterns = [
-    # .as_view() because Siedlung_Home is a class
-    # name is the name of the url. So we can access the url by name from 0 everywhere
+    """
+    .as_view() because class-view pattern
+    name is the name of the url. So we can access the url by name from 0 everywhere
+    pk pattern: define the pk within the url with descriptive name. Some more code to define because you need to define
+    the get_objects method but it is way more clear.
+    """
     path('', SiedlungHome.as_view(), name='siedlung_home'),
     path('create-siedlung/', SiedlungCreate.as_view(), name='siedlung_create'),
-    # Needs a call with the pk of the object like {% url 'siedlung_detail' siedlung.pk}
-    path('<int:pk>/', SiedlungDetail.as_view(), name='siedlung_detail'),
-    path('<int:pk>/update/', SiedlungUpdate.as_view(), name='siedlung_update'),
-    path('<int:pk>/delete/', SiedlungDelete.as_view(), name='siedlung_delete'),
-    path('<int:pk>/create-objekt/', ObjektCreate.as_view(), name='objekt_create'),
-    path('<int:pk>/detail-objekt', ObjektDetail.as_view(), name='objekt_detail')
+    path('<int:siedlung_pk>/', SiedlungDetail.as_view(), name='siedlung_detail'),
+    path('<int:siedlung_pk>/update/', SiedlungUpdate.as_view(), name='siedlung_update'),
+    path('<int:siedlung_pk>/delete/', SiedlungDelete.as_view(), name='siedlung_delete'),
+    path('<int:siedlung_pk>/create-objekt/', ObjektCreate.as_view(), name='objekt_create'),
+    path('<int:siedlung_pk>/<int:objekt_pk>/', ObjektDetail.as_view(), name='objekt_detail')
 ]
 
 

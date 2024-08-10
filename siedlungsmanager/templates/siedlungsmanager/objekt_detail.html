@@ -9,7 +9,7 @@
         <p>Bereich: {{ objekt.bereich }}</p>
         <p>Punkte: {{ objekt.punkte }}</p>
         <p>Aktuelle Miete: {{ objekt.aktuelle_miete }}</p>
-        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' pk=siedlung.pk %}">Zurück</a>
+        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung_pk=siedlung.pk %}">Zurück</a>
 <!--        <a class="btn btn-danger btn-sm" href="#">Löschen</a>
         <a class="btn btn-success btn-sm" href="#">Update</a>
 -->
