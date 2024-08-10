@@ -6,13 +6,13 @@ from .views import SiedlungUpdate
 from .views import SiedlungDelete
 from .views import ObjektDetail
 
+"""
+.as_view() because class-view pattern
+name is the name of the url. So we can access the url by name from 0 everywhere
+pk pattern: define the pk within the url with descriptive name. Some more code to define because you need to define
+the get_objects method but it is way more clear.
+"""
 urlpatterns = [
-    """
-    .as_view() because class-view pattern
-    name is the name of the url. So we can access the url by name from 0 everywhere
-    pk pattern: define the pk within the url with descriptive name. Some more code to define because you need to define
-    the get_objects method but it is way more clear.
-    """
     path('', SiedlungHome.as_view(), name='siedlung_home'),
     path('create-siedlung/', SiedlungCreate.as_view(), name='siedlung_create'),
     path('<int:siedlung_pk>/', SiedlungDetail.as_view(), name='siedlung_detail'),
