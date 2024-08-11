@@ -153,4 +153,27 @@ class ObjektDetail(DetailView):
         return context
 
 
+class ObjektUpdate(UpdateView):
+    model = Objekt
+    template_name = 'siedlungsmanager/objekt_update.html'
+    fields = '__all__'
+
+    def get_object(self, **kwargs):
+        objekt_pk = self.kwargs.get('objekt_pk')
+        return get_object_or_404(Objekt, pk=objekt_pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        siedlung_pk = self.kwargs.get('siedlung_pk')
+        context['siedlung'] = get_object_or_404(Siedlung, pk=siedlung_pk)
+        return context
+
+    def get_success_url(self):
+        kwargs={
+            'siedlung_pk': self.object.siedlung.pk,
+            'objekt_pk': self.object.pk
+        }
+        return reverse_lazy('objekt_detail', kwargs=kwargs)
+
+
 
