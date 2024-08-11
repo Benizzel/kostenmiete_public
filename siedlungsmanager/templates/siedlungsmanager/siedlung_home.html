@@ -17,7 +17,9 @@
 <ul>
     {% if objekte %}
         {% for objekt in objekte %}
-        <li><a>Objekt: {{ objekt.internal_oid }} zu Siedlung: {{ objekt.siedlung.internal_id }}</a></li>
+        <li>
+            <a href="{% url 'objekt_detail' objekt.siedlung.pk objekt.pk %}"> Objekt: {{ objekt.internal_oid }} zu Siedlung: {{ objekt.siedlung.internal_id }}</a>
+        </li>
         {% endfor %}
     {% else %}
         <p>🤨 Noch keine Objekte vorhanden. Diese können über die Siedlung erstellt werden</p>

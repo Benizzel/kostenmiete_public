@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Objekt {{ objekt.internal_oid }} löschen</h2>
+<form action="" method="post">{% csrf_token %}
+    <p>Bist du sicher das du das Objekte löschen möchtest?</p>
+    <p><strong>{{ objekt.internal_oid }} {{ objekt.bezeichnung }}</strong></p>
+    <a class="btn btn-secondary btn-sm" href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">Zurück</a>
+    <button type="submit btn-sm" class="btn btn-danger btn-sm">Löschen</button>
+</form>
+{% endblock content %}

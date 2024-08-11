@@ -9,8 +9,8 @@
         <p>Bereich: {{ objekt.bereich }}</p>
         <p>Punkte: {{ objekt.punkte }}</p>
         <p>Aktuelle Miete: {{ objekt.aktuelle_miete }}</p>
-        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung_pk=siedlung.pk %}">Zurück</a>
-        <a class="btn btn-danger btn-sm" href="#">Löschen</a>
-        <a class="btn btn-success btn-sm" href="{% url 'objekt_update' siedlung_pk=siedlung.pk objekt_pk=objekt.pk %}">Update</a>
+        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung.pk %}">Zu Siedlung {{ siedlung.internal_id }}</a>
+        <a class="btn btn-danger btn-sm" href="{%  url 'objekt_delete' siedlung.pk objekt.pk %}">Löschen</a>
+        <a class="btn btn-success btn-sm" href="{% url 'objekt_update' siedlung.pk objekt.pk %}">Update</a>
 
 {% endblock content %}
