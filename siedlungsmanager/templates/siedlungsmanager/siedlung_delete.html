@@ -1,35 +1,83 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Siedlung {{ siedlung.internal_id }} löschen</h2>
-<form action="" method="post">{% csrf_token %}
-    <p>Bist du sicher das du die Siedlung und alle dazugehörigen Objekte löschen möchtest?</p>
-    <p><strong>{{ siedlung.internal_id }} {{ siedlung.bezeichnung }}</strong></p>
-    <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung.pk %}">Zurück</a>
-    <button type="submit btn-sm" class="btn btn-danger btn-sm">Löschen</button>
-
-    {% if objekte %}
-        <h2>Objekte in dieser Siedlung, die auch gelöscht werden:</h2>
-        <table border="1" cellpadding="5" cellspacing="0" width="50%" align="center">
-            <thead>
-                <tr>
-                    <th>Interne OID</th>
-                    <th>Bezeichnung</th>
-                    <th>Siedlung</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for objekt in objekte %}
-                <tr>
-                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.internal_oid }}</a></td>
-                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.bezeichnung }}</a></td>
-                    <td>{{ objekt.siedlung.internal_id }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-            <p>Keine Objekte in dieser Siedlung.</p>
-    {% endif %}
-</form>
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="{% url 'siedlung_home' %}">Home</a></li>
+        <li><a href="{% url 'siedlung_detail' siedlung.pk %}" aria-current="page">Siedlung {{ siedlung.internal_id }}</a></li>
+        <li class="is-active"><a href="{% url 'siedlung_delete' siedlung.pk %}" aria-current="page">löschen</a></li>
+    </ul>
+</nav>
+<section class="hero is-danger">
+    <div class="hero-body has-text-centered">
+        <p class="title has-text-white">Siedlung {{ siedlung.internal_id }}</p>
+        <p class="subtitle has-text-white">{{ siedlung.bezeichnung }}</p>
+  </div>
+</section>
+<hr>
+<section class="section">
+    <div class="container">
+        <div class="card">
+            <form action="" method="post">
+            {% csrf_token %}
+                <div class="card-content">
+                    <p>
+                        Mit <i>Bestätigen & Löschen</i> wird die <strong>Siedlung {{ siedlung.internal_id }} - {{ siedlung.bezeichnung }} mit sämtlichen dazugehörigen Objekten</strong> gelöscht.
+                    </p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{% url 'siedlung_detail' siedlung.pk %}" class="card-footer-item has-background-grey has-text-white">Abbrechen und Zurück</a>
+                    <button type="submit" class="card-footer-item has-background-danger has-text-primary-dark">Bestätigen & Löschen</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+</section>
+<hr>
+<section class="section">
+    <section class="container">
+        <h1 class="title">
+            Zur Siedlung gehörende Objekte
+        </h1>
+    </section>
+    <section class="section">
+            <div class="container">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title has-text-link-bold">Objekte</p>
+                    </header>
+                    <div class="card-content">
+                        {%  if objekte %}
+                        <table class="table is-bordered is-fullwidth is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Interne OID</th>
+                                    <th>Bezeichnung</th>
+                                    <th>Bereich</th>
+                                    <th>Punkte</th>
+                                    <th>Aktuelle Miete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for objekt in objekte %}
+                                <tr>
+                                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}" class="has-text-link">{{ objekt.internal_oid }}</a></td>
+                                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}" class="has-text-link">{{ objekt.bezeichnung }}</a></td>
+                                    <td>{{ objekt.bereich }}</td>
+                                    <td>{{ objekt.punkte }}</td>
+                                    <td>{{ objekt.aktuelle_miete }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="notification is-warning is-light">
+                            <p >Keine Objekte vorhanden</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+    </section>
+</section>
 {% endblock content %}

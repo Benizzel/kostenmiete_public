@@ -1,43 +1,151 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h2>🏠 Siedlung {{ siedlung.internal_id }} </h2>
-        <p>Interne ID: {{ siedlung.internal_id }}</p>
-        <p>Bezeichnung: {{ siedlung.bezeichnung }}</p>
-        <p>Anlagewert: {{ siedlung.anlagewert }}</p>
-        <p>GVZ-Wert: {{ siedlung.versicherungswert }}</p>
-        <p>Baurechtszins: {{ siedlung.baurechtszins }}</p>
-        <p>Betriebsquote Zuschlag: {{ siedlung.betriebsquote_zuschlag }}</p>
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="{% url 'siedlung_home' %}">Home</a></li>
+        <li class="is-active"><a href="{% url 'siedlung_detail' siedlung.pk %}" aria-current="page">Siedlung {{ siedlung.internal_id }}</a></li>
+    </ul>
+</nav>
+<section class="hero is-primary">
+    <div class="hero-body is has-text-centered">
+        <p class="title has-text-primary-dark">Siedlung {{ siedlung.internal_id }}</p>
+        <p class="subtitle has-text-primary-dark">{{ siedlung.bezeichnung }}</p>
+  </div>
+</section>
+<section class="section">
+    <section class="section">
+        <div class="container">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title has-text-primary-bold">Stammdaten</p>
+                </header>
+                <div class="card-content">
+                    <div class="columns">
+                        <div class="column">
+                            <p><strong>Anlagewert:</strong></p>
+                            <hr>
+                            <p><strong>GVZ-Wert:</strong></p>
+                            <hr>
+                            <p><strong>Baurechtszins:</strong></p>
+                            <hr>
+                            <p><strong>Betriebsquote-Zuschlag:</strong></p>
+                        </div>
+                        <hr>
+                        <div class="column">
+                            <p>{{ siedlung.anlagewert }}</p>
+                            <hr>
+                            <p>{{ siedlung.versicherungswert }}</p>
+                            <hr>
+                            <p>{{ siedlung.baurechtszins }}</p>
+                            <hr>
+                            <p>{{ siedlung.betriebsquote_zuschlag }}</p>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a href="{% url 'siedlung_update' siedlung.pk %}" class="card-footer-item button is-primary is-outlined">Aktualisieren</a>
+                </footer>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+            <div class="container">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title has-text-link-bold">Objekte</p>
+                    </header>
+                    <div class="card-content">
+                        {%  if objekte %}
+                        <table class="table is-bordered is-fullwidth is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Interne OID</th>
+                                    <th>Bezeichnung</th>
+                                    <th>Bereich</th>
+                                    <th>Punkte</th>
+                                    <th>Aktuelle Miete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for objekt in objekte %}
+                                <tr>
+                                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}" class="has-text-link">{{ objekt.internal_oid }}</a></td>
+                                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}" class="has-text-link">{{ objekt.bezeichnung }}</a></td>
+                                    <td>{{ objekt.bereich }}</td>
+                                    <td>{{ objekt.punkte }}</td>
+                                    <td>{{ objekt.aktuelle_miete }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="notification is-warning is-light">
+                            <p >🤨 Noch keine Objekte vorhanden.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <footer class="card-footer">
+                         <a href="{% url 'objekt_create' siedlung.pk %}" class="card-footer-item button is-link is-outlined">Neues Objekt hinzufügen</a>
+                    </footer>
+                </div>
+            </div>
+    </section>
+</section>
+    <hr>
+<section class="section">
+   <div class="container">
+        <div class="box is-centered">
+            <h1 class="title is-1 has-text-centered">
+            ⚠️ DANGER ZONE ⚠️
+            </h1>
+            <a href="{% url 'siedlung_delete' siedlung.pk %}" class="button is-danger is-fullwidth">Siedlung mit allen Objekten löschen</a>
+        </div>
+   </div>
+</section>
 
-        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_home' %}">Zurück</a>
-        <a class="btn btn-danger btn-sm" href="{% url 'siedlung_delete' siedlung.pk %}">Löschen</a>
-        <a class="btn btn-success btn-sm" href="{% url 'siedlung_update' siedlung.pk %}">Update</a>
-        <hr>
-        <a class="btn btn-success btn-sm" href="{% url 'objekt_create' siedlung.pk %}">+ Neues Objekt hinzufügen</a>
-        <p>
+<div class="container">
+    <button class="button is-primary" id="open-modal">Test-Modal</button>
 
+    <div class="modal" id="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button class="delete" aria-label="close" id="close-modal"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">Save changes</button>
+                <button class="button" id="close-modal-footer">Cancel</button>
+            </footer>
+        </div>
+    </div>
+</div>
 
-        {%  if objekte %}
-        <table border="1" cellpadding="5" cellspacing="0" width="50%" align="center">
-            <caption>Objekte in dieser Siedlung</caption>
-            <thead>
-                <tr>
-                    <th>Interne OID</th>
-                    <th>Bezeichnung</th>
-                    <th>Siedlung</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for objekt in objekte %}
-                <tr>
-                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.internal_oid }}</a></td>
-                    <td><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}">{{ objekt.bezeichnung }}</a></td>
-                    <td>{{ objekt.siedlung.internal_id }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-            <p>Keine Objekte in dieser Siedlung.</p>
-        {% endif %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const openButton = document.getElementById('open-modal');
+    const closeButton = document.getElementById('close-modal');
+    const closeFooterButton = document.getElementById('close-modal-footer');
+    const modal = document.getElementById('modal');
+
+    openButton.addEventListener('click', () => {
+        modal.classList.add('is-active');
+    });
+
+    closeButton.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+
+    closeFooterButton.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+
+    document.querySelector('.modal-background').addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+});
+</script>
 {% endblock content %}

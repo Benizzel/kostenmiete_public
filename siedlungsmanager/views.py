@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from .form import ObjektCreateForm
+from .form import ObjektCreateForm, SiedlungForm
 from .models import Siedlung, Objekt
 
 
@@ -19,7 +19,7 @@ class SiedlungHome(ListView):
 class SiedlungCreate(CreateView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_create.html'
-    fields = '__all__'
+    form_class = SiedlungForm
     # in contrast to reverse: reverse_lazy is waiting until db entry is done
     success_url = reverse_lazy('siedlung_home')
 
@@ -48,7 +48,8 @@ class SiedlungDetail(DetailView):
 class SiedlungUpdate(UpdateView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_update.html'
-    fields = '__all__'
+    # Defines that all field are included in the form which is passed to the html
+    form_class = SiedlungForm
 
     def get_object(self, **kwargs):
         """
@@ -195,6 +196,3 @@ class ObjektDelete(DeleteView):
             'siedlung_pk': self.object.siedlung.pk,
         }
         return reverse_lazy('siedlung_detail', kwargs=kwargs)
-
-
-

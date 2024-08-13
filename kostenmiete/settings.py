@@ -70,8 +70,7 @@ ROOT_URLCONF = 'kostenmiete.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,7 +144,13 @@ USE_THOUSAND_SEPARATOR = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = '/static/'
+
+# Directory where Django saves static files when running collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# List of directories with static files.
+# Django will grab them when running command collectstatic
+STATICFILES_DIRS = [BASE_DIR / "static_global"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

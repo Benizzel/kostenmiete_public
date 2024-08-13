@@ -110,6 +110,7 @@ class Siedlung(models.Model):
         verbose_name='Baurechtszins',
         blank=True,
         null=True,
+        help_text='Baurechtszins falls vorhanden'
     )
     betriebsquote_zuschlag = models.DecimalField(
         verbose_name='Betriebsquote Zuschlag',
@@ -121,7 +122,7 @@ class Siedlung(models.Model):
         ],
         blank=True,
         null=True,
-        help_text='Erfasse einen Wert zwischen 0 und 100 mit maximal zwei Nachkommastellen'
+        help_text='Wert wischen 0 und 100 mit maximal zwei Nachkommastellen'
     )
 
     class Meta:

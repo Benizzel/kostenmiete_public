@@ -1,28 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Alle Siedlungen</h2>
-<ul>
-    {% if siedlung_list %}
-        {% for siedlung in siedlung_list %}
-        <li><a href="{% url 'siedlung_detail' siedlung.pk %}">{{ siedlung.internal_id }} {{ siedlung.bezeichnung }}</a></li>
-        {% endfor %}
-    {% else %}
-        <p>🤨 Noch keine Siedlung vorhanden.</p>
-    {% endif %}
-</ul>
-<a class="btn btn-success btn-sm" href="{% url 'siedlung_create' %}">+ Neue Siedlung hinzufügen</a>
-    <hr>
-<h2>Alle Objekte </h2>
-<ul>
-    {% if objekte %}
-        {% for objekt in objekte %}
-        <li>
-            <a href="{% url 'objekt_detail' objekt.siedlung.pk objekt.pk %}"> Objekt: {{ objekt.internal_oid }} zu Siedlung: {{ objekt.siedlung.internal_id }}</a>
-        </li>
-        {% endfor %}
-    {% else %}
-        <p>🤨 Noch keine Objekte vorhanden. Diese können über die Siedlung erstellt werden</p>
-    {% endif %}
-</ul>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title is-1 has-text-centered">
+            Alle Siedlungen
+            </h1>
+            {% if siedlung_list %}
+            <div class="grid is-col-min-15 is-gap-2">
+                {% for siedlung in siedlung_list %}
+                <a href="{% url 'siedlung_detail' siedlung.pk %}">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title has-text-primary-bold">{{ siedlung.internal_id }} - {{ siedlung.bezeichnung }}</p>
+                        </header>
+                        <div class="card-content">
+                            <p>Anlagewert: {{ siedlung.anlagewert }}</p>
+                            <p>GVZ-Wert: {{ siedlung.versicherungswert }}</p>
+                            <p>Baurechtszins: {{ siedlung.baurechtszins }}</p>
+                            <p>Betriebsquote-Zuschlag: {{ siedlung.betriebsquote_zuschlag }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="notification is-warning is-light">
+                <p >🤨 Noch keine Siedlung vorhanden.</p>
+            </div>
+            {% endif %}
+            <a href="{% url 'siedlung_create' %}" class="button is-primary is-fullwidth is-rounded">+ Neue Siedlung hinzufügen</a>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title is-1 has-text-centered">
+            Alle Objekte
+            </h1>
+            {% if objekte %}
+            <div class="grid is-col-min-15 is-gap-2">
+                {% for objekt in objekte %}
+                <a href="{% url 'objekt_detail' objekt.siedlung.pk objekt.pk %}">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title has-text-link-bold">{{ objekt.internal_oid }} - {{ objekt.bezeichnung }}</p>
+                        </header>
+                        <div class="card-content">
+                            <p>Siedlung: {{ objekt.siedlung.internal_id }}</p>
+                            <p>Bereich: {{ objekt.bereich }}</p>
+                            <p>Punkte: {{ objekt.punkte }}</p>
+                            <p>Aktuelle Miete: {{ objekt.aktuelle_miete }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="notification is-warning is-light">
+                <p >🤨 Noch keine Objekte vorhanden.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
 {% endblock content %}
