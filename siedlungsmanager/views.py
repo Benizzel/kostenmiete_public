@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from .form import ObjektCreateForm, SiedlungForm, ObjektForm
+from .form import SiedlungForm, ObjektForm
 from .models import Siedlung, Objekt
 
 

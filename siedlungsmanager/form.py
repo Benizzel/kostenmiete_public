@@ -107,8 +107,3 @@ class ObjektForm(forms.ModelForm):
             raise forms.ValidationError('Der Mietbetrag muss positiv sein.')
         return value
 
-
-class ObjektCreateForm(forms.ModelForm):
-    class Meta:
-        model = Objekt
-        exclude = ['siedlung']
