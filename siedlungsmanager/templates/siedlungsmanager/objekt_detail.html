@@ -1,15 +1,68 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h2>🪴 Objekt {{ objekt.internal_oid }} </h2>
-    <h3>{{ objekt.bezeichnung }}</h3>
-        <p>Siedlung: {{ siedlung.internal_id }} {{ siedlung.bezeichnung }}</p>
-        <p>Interne OID: {{ objekt.internal_oid }}</p>
-        <p>Bezeichnung: {{ objekt.bezeichnung }}</p>
-        <p>Bereich: {{ objekt.bereich }}</p>
-        <p>Punkte: {{ objekt.punkte }}</p>
-        <p>Aktuelle Miete: {{ objekt.aktuelle_miete }}</p>
-        <a class="btn btn-secondary btn-sm" href="{% url 'siedlung_detail' siedlung.pk %}">Zu Siedlung {{ siedlung.internal_id }}</a>
-        <a class="btn btn-danger btn-sm" href="{%  url 'objekt_delete' siedlung.pk objekt.pk %}">Löschen</a>
-        <a class="btn btn-success btn-sm" href="{% url 'objekt_update' siedlung.pk objekt.pk %}">Update</a>
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="{% url 'siedlung_home' %}">Home</a></li>
+        <li><a href="{% url 'siedlung_detail' siedlung.pk %}" aria-current="page">Siedlung {{ siedlung.internal_id }}</a></li>
+        <li class="is-active"><a href="{% url 'objekt_detail' siedlung.pk objekt.pk %}" aria-current="page">Objekt {{ objekt.internal_oid }}</a></li>
+    </ul>
+</nav>
+<section class="hero is-link">
+    <div class="hero-body is has-text-centered">
+        <p class="title has-text-white">Objekt {{ objekt.internal_oid }}</p>
+        <p class="subtitle has-text-white">{{ objekt.bezeichnung }}</p>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <a href="{% url 'siedlung_detail' siedlung.pk %}" class="button is-link is-light">Zu Siedlung {{ siedlung.internal_id }}</a>
+    </div>
+    <section class="section">
+        <div class="container">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title has-text-link-bold">Objektdaten</p>
+                </header>
+                <div class="card-content">
+                    <div class="columns">
+                        <div class="column">
+                            <p><strong>Bereich:</strong></p>
+                            <hr>
+                            <p><strong>Punkte:</strong></p>
+                            <hr>
+                            <p><strong>Aktuelle Miete:</strong></p>
+                            <hr>
+                            <p><strong>Siedlung:</strong></p>
+                        </div>
+                        <hr>
+                        <div class="column">
+                            <p>{{ objekt.bereich }}</p>
+                            <hr>
+                            <p>{{ objekt.punkte }}</p>
+                            <hr>
+                            <p>{{ objekt.aktuelle_miete }}</p>
+                            <hr>
+                            <p><a href="{% url 'siedlung_detail' siedlung.pk %}">{{ siedlung.internal_id }} - {{ siedlung.bezeichnung }}</a></p>
+
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a href="{% url 'objekt_update' siedlung.pk objekt.pk %}" class="card-footer-item button is-link is-outlined">Aktualisieren</a>
+                </footer>
+            </div>
+        </div>
+    </section>
+</section>
+<hr>
+<section class="section">
+   <div class="container">
+        <div class="box is-centered">
+            <h1 class="title is-1 has-text-centered">
+            ⚠️ DANGER ZONE ⚠️
+            </h1>
+            <a href="{% url 'objekt_delete' siedlung.pk objekt.pk %}" class="button is-danger is-fullwidth">Objekt löschen</a>
+        </div>
+   </div>
+</section>
 {% endblock content %}

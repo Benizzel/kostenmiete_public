@@ -1,18 +1,52 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h2>Neues Objekt hinzufügen</h2>
-    <h3>Für Siedlung {{ siedlung.internal_id }}</h3>
-<form action="" method="post">
-<!--
-csrf_token is against cross-site-request-forgery
-https://de.wikipedia.org/wiki/Cross-Site-Request-Forgery
--->
-    {% csrf_token %}
-<!-- with form.as_p, django creates input fields within a <p> tag -->
-    {{ form.as_p }}
-    <a class="btn btn-danger btn-sm" href="{% url 'siedlung_detail' siedlung.pk %}">Abbrechen</a>
-    <button type="reset" class="btn btn-secondary btn-sm">Zurücksetzen</button>
-    <button type="submit" class="btn btn-success btn-sm">Speichern</button>
-</form>
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="{% url 'siedlung_home' %}">Home</a></li>
+        <li><a href="{% url 'siedlung_detail' siedlung.pk %}" aria-current="page">Siedlung {{ siedlung.internal_id }}</a></li>
+        <li class="is-active"><a href="{% url 'objekt_create' siedlung.pk %}" aria-current="page">Objekt erstellen</a></li>
+    </ul>
+</nav>
+<section class="hero is-link">
+    <div class="hero-body has-text-centered">
+        <p class="title has-text-white">Neues Objekt</p>
+        <p class="subtitle has-text-white">Where the Saga continues</p>
+        <span class="tag is-warning">erstellen</span>
+  </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="card">
+            <header class="card-header">
+                    <p class="card-header-title has-text-primary-bold">Objektdaten</p>
+            </header>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="card-content">
+                    {% for field in form %}
+                    <div class="field">
+                        <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="control">
+                            {{ field }}
+                        </div>
+                        {% if field.help_text %}
+                            <p class="help">{{ field.help_text }}</p>
+                        {% endif %}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="help is-danger is-size-6">⚠️ {{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+                <footer class="card-footer">
+                    <a href="{% url 'siedlung_detail' siedlung.pk %}" class="card-footer-item has-background-danger has-text-white">Abbrechen</a>
+                    <button type="reset" class="card-footer-item has-background-grey has-text-white">Zurücksetzen</button>
+                    <button type="submit" class="card-footer-item has-background-primary has-text-primary-dark">Speichern</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock content %}

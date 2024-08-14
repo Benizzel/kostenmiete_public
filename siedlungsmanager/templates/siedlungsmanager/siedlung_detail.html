@@ -13,6 +13,9 @@
   </div>
 </section>
 <section class="section">
+    <div class="container">
+        <a href="{% url 'siedlung_home' %}" class="button is-primary is-light">Zurück zur Übersicht</a>
+    </div>
     <section class="section">
         <div class="container">
             <div class="card">
@@ -102,50 +105,4 @@
         </div>
    </div>
 </section>
-
-<div class="container">
-    <button class="button is-primary" id="open-modal">Test-Modal</button>
-
-    <div class="modal" id="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Modal title</p>
-                <button class="delete" aria-label="close" id="close-modal"></button>
-            </header>
-            <section class="modal-card-body">
-                <!-- Content ... -->
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-success">Save changes</button>
-                <button class="button" id="close-modal-footer">Cancel</button>
-            </footer>
-        </div>
-    </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const openButton = document.getElementById('open-modal');
-    const closeButton = document.getElementById('close-modal');
-    const closeFooterButton = document.getElementById('close-modal-footer');
-    const modal = document.getElementById('modal');
-
-    openButton.addEventListener('click', () => {
-        modal.classList.add('is-active');
-    });
-
-    closeButton.addEventListener('click', () => {
-        modal.classList.remove('is-active');
-    });
-
-    closeFooterButton.addEventListener('click', () => {
-        modal.classList.remove('is-active');
-    });
-
-    document.querySelector('.modal-background').addEventListener('click', () => {
-        modal.classList.remove('is-active');
-    });
-});
-</script>
 {% endblock content %}

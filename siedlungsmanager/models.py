@@ -52,12 +52,14 @@ class Objekt(models.Model):
     )
 
     bereich = models.CharField(
+        verbose_name='Bereich',
         max_length=2,
         choices=BEREICH_CHOICES,
         default=BEREICH_2
     )
 
     punkte = models.DecimalField(
+        verbose_name='Punkte',
         choices=PUNKTE_CHOICES,
         decimal_places=1,
         max_digits=3,
@@ -65,6 +67,7 @@ class Objekt(models.Model):
     )
 
     aktuelle_miete = models.DecimalField(
+        verbose_name='Aktuelle Miete',
         max_digits=10,
         decimal_places=2,
         default=0.00,
@@ -73,7 +76,8 @@ class Objekt(models.Model):
 
     siedlung = models.ForeignKey(
         'Siedlung',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        help_text='Achtung: ordnet das Objekt der ausgewählten Siedlung zu!'
     )
 
     class Meta:

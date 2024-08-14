@@ -4,7 +4,7 @@
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
     <ul>
         <li><a href="{% url 'siedlung_home' %}">Home</a></li>
-        <li><a href="{% url 'siedlung_detail' siedlung.pk %}" aria-current="page">Siedlung {{ siedlung.internal_id }}</a></li>
+        <li><a href="{% url 'siedlung_detail' siedlung.pk %}">Siedlung {{ siedlung.internal_id }}</a></li>
         <li class="is-active"><a href="{% url 'siedlung_delete' siedlung.pk %}" aria-current="page">löschen</a></li>
     </ul>
 </nav>

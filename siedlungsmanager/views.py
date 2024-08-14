@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from .form import ObjektCreateForm, SiedlungForm
+from .form import ObjektCreateForm, SiedlungForm, ObjektForm
 from .models import Siedlung, Objekt
 
 
@@ -87,8 +87,17 @@ class SiedlungDelete(DeleteView):
 class ObjektCreate(CreateView):
     model = Objekt
     # Use Custom form to exclude attribute Siedlung from the UI
-    form_class = ObjektCreateForm
+    form_class = ObjektForm
     template_name = 'siedlungsmanager/objekt_create.html'
+
+    def get_form(self, form_class=None):
+        """
+        Excludes the siedlung-field from the form for the ObjektCreate View because
+        siedlung is set to the siedlung of the context automatically within form_valid()
+        """
+        form = super().get_form(form_class)
+        form.fields.pop('siedlung')
+        return form
 
     def form_valid(self, form):
         """
@@ -157,7 +166,7 @@ class ObjektDetail(DetailView):
 class ObjektUpdate(UpdateView):
     model = Objekt
     template_name = 'siedlungsmanager/objekt_update.html'
-    fields = '__all__'
+    form_class = ObjektForm
 
     def get_object(self, **kwargs):
         objekt_pk = self.kwargs.get('objekt_pk')
