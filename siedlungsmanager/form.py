@@ -73,6 +73,9 @@ class SiedlungForm(forms.ModelForm):
 
 
 class ObjektForm(forms.ModelForm):
+    """
+    Generic Objekt Form so that Bulma Styling can be applied.
+    """
     class Meta:
         model = Objekt
         fields = '__all__'
