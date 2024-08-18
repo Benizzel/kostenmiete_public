@@ -17,7 +17,6 @@ class SiedlungFormTestCase(TestCase):
         )
 
     def test_invalid_betriebsquote_upper_bound(self):
-        # Assuming you have a view named 'my_form' that handles the form
         url = reverse('siedlung_update', kwargs={'siedlung_pk': self.siedlung.pk})
 
         # Prepare invalid data
@@ -48,7 +47,6 @@ class SiedlungFormTestCase(TestCase):
         self.assertContains(response, 'zwischen 0 und 100')
 
     def test_invalid_betriebsquote_decimal(self):
-        # Assuming you have a view named 'my_form' that handles the form
         url = reverse('siedlung_update', kwargs={'siedlung_pk': self.siedlung.pk})
 
         # Prepare invalid data
