@@ -126,7 +126,7 @@ class Siedlung(models.Model):
         ],
         blank=True,
         null=True,
-        help_text='Wert wischen 0 und 100 mit maximal zwei Nachkommastellen'
+        help_text='Wert zwischen 0 und 100 mit maximal zwei Nachkommastellen'
     )
 
     class Meta:
