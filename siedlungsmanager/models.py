@@ -82,6 +82,8 @@ class Objekt(models.Model):
 
     class Meta:
         ordering = ['internal_oid']
+        verbose_name = 'Objekt'
+        verbose_name_plural = 'Objekte'
 
     def __str__(self):
         return f"{self.internal_oid} {self.bezeichnung}"
@@ -131,6 +133,8 @@ class Siedlung(models.Model):
 
     class Meta:
         ordering = ['internal_id']
+        verbose_name = 'Siedlung'
+        verbose_name_plural = 'Siedlungen'
 
     def __str__(self):
         return f"{self.internal_id} {self.bezeichnung}"
