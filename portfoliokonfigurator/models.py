@@ -3,7 +3,7 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 
-# TODO: Max one occurence of the parameter on the UI and on Admin!
+# TODO: Max one occurrence of the parameter on the UI and on Admin!
 # Funktioniert theoretisch schon, weil wenn "neu" macht die App einfach ein Update (def save) - geht vielleicht noch
 # schöner mit einem Singleton ansatz
 class GlobalSettings(models.Model):

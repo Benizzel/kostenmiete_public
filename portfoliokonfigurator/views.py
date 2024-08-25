@@ -5,6 +5,7 @@ from .models import GlobalSettings, Qualitaetsfaktor
 
 
 class Portfoliokonfiguration(ListView):
+    # TODO: Create settings-view
     template_name = 'portfoliokonfiguration.html'
 
     def get_context_data(self, **kwargs):
