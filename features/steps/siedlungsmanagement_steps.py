@@ -16,13 +16,9 @@ def step_impl(context):
     assert context.response.status_code == 200
 
 
-@when('I am on the Siedlung creation page')
+@when('I fill in the Siedlung details on the Siedlung creation page')
 def step_impl(context):
     assert 'Neue Siedlung' in context.response.content.decode()
-
-
-@when('I fill in the Siedlung details')
-def step_impl(context):
     context.siedlung_data = {
         'internal_id': 'DOG',
         'bezeichnung': 'Doghausen',
@@ -39,12 +35,12 @@ def step_impl(context):
     assert context.response.status_code == 302  # Expecting a redirect
 
 
-@then('I should be redirected to the Siedlung home page')
+@then('I am redirected to the homepage')
 def step_impl(context):
     assert context.response.url == reverse('siedlung_home')
 
 
-@then('I should see the newly created Siedlung listed')
+@then('I see the newly created Siedlung in the list of all Siedlungen')
 def step_impl(context):
     response = context.client.get(reverse('siedlung_home'))
     assert 'DOG' in response.content.decode()
