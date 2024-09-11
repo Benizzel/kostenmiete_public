@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature File Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>Siedlungsmanagement Feature File Content</h1>
+    <pre id="feature-content">Loading...</pre>
+
+    <script>
+        const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Benizzel/kostenmiete/main/features/siedlungsmanagement.feature";
+
+        async function fetchFeatureFile() {
+            try {
+                const response = await fetch(GITHUB_RAW_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const content = await response.text();
+                document.getElementById('feature-content').textContent = content;
+            } catch (error) {
+                console.error("Could not fetch the feature file:", error);
+                document.getElementById('feature-content').textContent = "Error loading feature file. Please try again later.";
+            }
+        }
+
+        fetchFeatureFile();
+    </script>
+</body>
+</html>
