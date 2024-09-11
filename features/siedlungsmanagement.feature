@@ -21,14 +21,20 @@ Feature: Siedlung bewirtschaften
     And the newly created Objekt is visible in the list of all Objekte within the Siedlung
     And the newly created Objekt is visible in the list of all Objekte on the homepage
 
-Scenario: Update Siedlung - Change Stammdaten
-    Given existing Siedlung
-    When users changes Stammdaten of Siedlung
-    And user saves changes
-    Then user gets redirected to the Siedlung details page
-    And updated Stammdaten are visible
+  # Test variaton on DB (Model) Level with Unit Test because there is the validation
+  # Django serves the DB Validation with a proper UI Message
+  # Specific UI Unit Test for own Validators
+  Scenario: Update Siedlung - Change Stammdaten
+      Given existing Siedlung
+      When users changes Stammdaten of Siedlung
+      And user saves changes
+      Then user gets redirected to the Siedlung details page
+      And updated Stammdaten are visible
 
   # Systemtest
+  # Check after deletion if Siedlung-Detail can be loaded with siedlung_pk -> Expected: 404
+  # Check the same way if Objekt with siedlung_fk is available -> Expected: 404
+  # "Browser Caching" - Check with Cypress if list-count of all Siedlungen == Siedlung Cards on UI
   # could potentially be tested without UI when relocating the last two steps into a separate UI verification
   Scenario: Delete Siedlung
     Given existing Siedlung with 1-n Objekte
@@ -36,10 +42,12 @@ Scenario: Update Siedlung - Change Stammdaten
     And warning message on UI is confirmed by user
     Then Siedlung is deleted
     And all Objekte within Siedlung are deleted
+  # Implement this with Cypress
     And Siedlung is not visible anymore on homepage
     And Objekte are not visible anymore on homepage
 
-#Objekt spezifische Tests
+# Objekt spezifische Tests
+  # Implementation "-1": http request "DEL" with random Objekt_pk (der nicht in der DB sein kann...) -> Expected: "Objekt not available" 
   Scenario Outline: Delete Objekt within Siedlung
     Given exisiting Siedlung with <number_of_objekte> Objekte
     When <number_of_objekte_to_be_deleted> Objekt get deleted
@@ -52,7 +60,7 @@ Scenario: Update Siedlung - Change Stammdaten
       | 5                 | 5                               | accepted     |
       | 5                 | -1                              | not accepted |
 
-  #negative case
+  # negative case
   Scenario: Create Objekt without Siedlung
     Given Objekte database exists 
     When new Objekt gets created in database
@@ -68,10 +76,10 @@ Scenario: Update Siedlung - Change Stammdaten
     And saved changes are visible 
 
     Examples:
-      | current_bereich | current_punkte | current_miete | current_siedlung | new_bereich | new_punkte | new_miete | new_siedlung | changes saved |
-      | B2              |  8.0           | 2000          |  siedlung 1      | B3          |            |           |              | saved         |
-      | B3              |  10.0          | 3500          |  siedlung 1      |             |            | 4000      |              | saved         |
-      | GZ              |  6.0           | 0             |  siedlung 1      |             |            | 500       |              | not saved     |
-      | B2              |  8.0           | 2000          |  siedlung 1      |             |            |           | siedlung 2   | saved         |
+      | current_bereich | current_punkte | current_miete | current_siedlung | new_bereich | new_punkte | new_miete | new_siedlung | changes saved | explanation                                                                     |
+      | B2              |  8.0           | 2000          |  siedlung 1      | B3          |            |           |              | saved         |                                                                                 |
+      | B3              |  10.0          | 3500          |  siedlung 1      |             |            | 4000      |              | saved         |                                                                                 |
+      | GZ              |  6.0           | 0             |  siedlung 1      |             |            | 500       |              | not saved     | GZ Objekte dürfen keinen aktuellen Mietzins haben. Nur berechnete Kostenmiete!  |
+      | B2              |  8.0           | 2000          |  siedlung 1      |             |            |           | siedlung 2   | saved         |                                                                                 |
       
     
