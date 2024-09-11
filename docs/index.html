@@ -12,13 +12,18 @@
 <body>
     <h1>Siedlungsmanagement Feature File Content</h1>
     <pre id="feature-content">Loading...</pre>
-
     <script>
-        const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Benizzel/kostenmiete/tree/main/features/siedlungsmanagement.feature";
+        const GITHUB_RAW_URL = "https://api.github.com/repos/Benizzel/kostenmiete/contents/features/siedlungsmanagement.feature";
+        const GITHUB_TOKEN = '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'; // Ersetzen Sie dies mit Ihrem tatsächlichen Token
 
         async function fetchFeatureFile() {
             try {
-                const response = await fetch(GITHUB_RAW_URL);
+                const response = await fetch(GITHUB_RAW_URL, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3.raw'
+                    }
+                });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -29,7 +34,6 @@
                 document.getElementById('feature-content').textContent = "Error loading feature file. Please try again later.";
             }
         }
-
         fetchFeatureFile();
     </script>
 </body>
