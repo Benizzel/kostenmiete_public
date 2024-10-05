@@ -5,7 +5,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from .form import SiedlungForm, ObjektForm
 from .models import Siedlung, Objekt
 
-
+# TODO Call it Home View
 class SiedlungHome(ListView):
     model = Siedlung
     template_name = 'siedlungsmanager/siedlung_home.html'
