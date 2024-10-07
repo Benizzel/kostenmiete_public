@@ -4,26 +4,24 @@ Feature: Siedlung bewirtschaften
 #Siedlungs spezifische Tests
   Scenario: Create a new Siedlung and verify it appears on the home page
     Given I am on the homepage
-    When I click the "Create Siedlung" button
-    And I fill in the Siedlung details on the Siedlung creation page
-    And I click the "Save" button
+    When I create a Siedlung
+    And I fill in the Siedlung details
+    And I save the Siedlung
     Then I am redirected to the homepage
-    And I see the newly created Siedlung in the list of all Siedlungen
+    And the Siedlung is in the list of all Siedlungen
 
-  # Systemtest
-  # to be enhanced with various object types, Siedlungs Stammdaten etc.
-  # Variants might be tested on lower test level
   Scenario: Update Siedlung - create new Objekt within Siedlung
-    Given existing, empty Siedlung
-    When creates new Objekt B2 within selected Siedlung
-    And saves new Objekt 
-    Then user gets redirected to the Siedlung details page
-    And the newly created Objekt is visible in the list of all Objekte within the Siedlung
-    And the newly created Objekt is visible in the list of all Objekte on the homepage
+    Given an existing Siedlung without Objekt
+    And I am on the Siedlung details
+    When I create a new Objekt
+    And I define the Bereich B2
+    And I fill in the other Objekt details
+    And I save the Objekt
+    Then I am redirected to the Siedlung details
+    And the Objekt is in the list of all Objekte on the Siedlung-Detail-page
+    When I navigate to the homepage
+    Then the Objekt is in the list of all Objekte on the home-page
 
-  # Test variaton on DB (Model) Level with Unit Test because there is the validation
-  # Django serves the DB Validation with a proper UI Message
-  # Specific UI Unit Test for own Validators
   Scenario: Update Siedlung - Change Stammdaten
       Given existing Siedlung
       When users changes Stammdaten of Siedlung
@@ -31,11 +29,6 @@ Feature: Siedlung bewirtschaften
       Then user gets redirected to the Siedlung details page
       And updated Stammdaten are visible
 
-  # Systemtest
-  # Check after deletion if Siedlung-Detail can be loaded with siedlung_pk -> Expected: 404
-  # Check the same way if Objekt with siedlung_fk is available -> Expected: 404
-  # "Browser Caching" - Check with Cypress if list-count of all Siedlungen == Siedlung Cards on UI
-  # could potentially be tested without UI when relocating the last two steps into a separate UI verification
   Scenario: Delete Siedlung
     Given existing Siedlung with 1-n Objekte
     When users deletes Siedlung
