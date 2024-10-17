@@ -12,6 +12,7 @@ class Objekt(models.Model):
     BEREICH_CHOICES = [
         (BEREICH_2, 'B2'),
         (BEREICH_3, 'B3'),
+        # TODO GZ oder GR?
         (BEREICH_4, 'GZ')
     ]
 
