@@ -22,6 +22,7 @@ Feature: Siedlung bewirtschaften
     When I navigate to the homepage
     Then the Objekt is in the list of all Objekte on the home-page
 
+  # TODO: Implement
   Scenario: Update Siedlung - Change Stammdaten
       Given existing Siedlung
       When users changes Stammdaten of Siedlung
